@@ -19,6 +19,11 @@ DOCKERCMD="docker run -it --rm -v ${GITPATH}:/git --mount source=${VOLUME},targe
 ELAPSED=$(time -f "%E" ${DOCKERCMD} 2>&1)
 printf "done. (${ELAPSED})\n"
 
+printf "Generating cloc: "
+DOCKERCMD="docker run -it --rm -v ${GITPATH}:/git --mount source=${VOLUME},target=/logs code-maat-cloc /git/ --by-file --csv --quiet --report-file=/logs/cloc.csv"
+ELAPSED=$(time -f "%E" ${DOCKERCMD} 2>&1)
+printf "done. (${ELAPSED})\n"
+
 BUSYBOX="docker run -it --rm --mount source=${VOLUME},target=/data busybox"
 CODEMAAT="docker run -it --rm --mount source=${VOLUME},target=/data code-maat-app --log /data/logfile.log --version-control git2"
 
@@ -45,5 +50,5 @@ do
     printf "done. (${ELAPSED})\n"
 done
 
-printf "Files Generated in docker volume ${VOLUME}:\n"
+printf "Files Generated in docker volume ${VOLUME}\n"
 ${BUSYBOX} ls -alh /data
