@@ -27,15 +27,6 @@ printf "done. (${ELAPSED})\n"
 BUSYBOX="docker run -it --rm --mount source=${VOLUME},target=/data busybox"
 CODEMAAT="docker run -it --rm --mount source=${VOLUME},target=/data code-maat-app --log /data/logfile.log --version-control git2"
 
-
-#analysis="summary"
-#DOCKERCMD="${CODEMAAT} --analysis ${analysis} --outfile /data/analysis-${analysis}.csv"
-#printf "Running analysis ${analysis}: "
-#ELAPSED=$(time -f "%E" ${DOCKERCMD} 2>&1)
-#printf "done. (${ELAPSED})\n"
-
-#$(${BUSYBOX} cat /data/analysis-summary.csv)
-
 AVAILABLEANALYSES=$(docker run --rm -it code-maat-app | grep "analysis to run" | sed 's@.*(\(.*\))@\1@g'| sed 's@,@@g' | xargs echo -n)
 for x in ${AVAILABLEANALYSES}
 do
