@@ -1,3 +1,3 @@
 #! /bin/ash
 
-git log --all --numstat --date=short --pretty=format:'--%h--%ad--%aN' --no-renames > /logs/logfile.log
+git log --all --numstat --date=short --pretty=format:'--%h--%ad--%aE' --no-renames > /logs/logfile.log
