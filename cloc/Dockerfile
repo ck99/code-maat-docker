@@ -1,4 +1,4 @@
 FROM alpine:3.8
 RUN apk add --no-cache cloc
-ENTRYPOINT ["/usr/bin/cloc"]
-CMD ["--help"]
+COPY generate-cloc.sh /bin/generate-cloc.sh
+ENTRYPOINT ["/bin/generate-cloc.sh"]

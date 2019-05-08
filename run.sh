@@ -20,7 +20,7 @@ ELAPSED=$(time -f "%E" ${DOCKERCMD} 2>&1)
 printf "done. (${ELAPSED})\n"
 
 printf "Generating cloc: "
-DOCKERCMD="docker run -it --rm -v ${GITPATH}:/git --mount source=${VOLUME},target=/logs code-maat-cloc /git/ --by-file --csv --quiet --report-file=/logs/cloc.csv"
+DOCKERCMD="docker run -it --rm -v ${GITPATH}:/git --mount source=${VOLUME},target=/logs code-maat-cloc"
 ELAPSED=$(time -f "%E" ${DOCKERCMD} 2>&1)
 printf "done. (${ELAPSED})\n"
 
@@ -40,6 +40,14 @@ do
     ELAPSED=$(time -f "%E" ${DOCKERCMD} 2>&1)
     printf "done. (${ELAPSED})\n"
 done
+
+MAATSCRIPTS="docker run -it --rm --mount source=${VOLUME},target=/data code-maat-scripts /maat-scripts"
+
+printf "Generating hotspots: "
+DOCKERCMD="${MAATSCRIPTS}/hotspots.sh"
+ELAPSED=$(time -f "%E" ${DOCKERCMD} 2>&1)
+printf "done. (${ELAPSED})\n"
+
 
 printf "Files Generated in docker volume ${VOLUME}\n"
 ${BUSYBOX} ls -alh /data
